@@ -24,7 +24,7 @@ class ChatServiceImplementation(apiKey: String) : ChatService {
         val chat = chatHolder.get()
         chat.addUserText(text)
 
-        repositories.get(model)?.request(converter(chat, model.image())) {
+        repositories.get(model)?.request(converter(chat, model.webGrounding(), model.image())) {
             if (it == null) {
                 return@request
             }
