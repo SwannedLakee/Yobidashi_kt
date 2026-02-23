@@ -144,6 +144,7 @@ fun ChatTabView() {
                             MessageContent(
                                 it.text,
                                 it.image,
+                                it.sources,
                                 modifier = Modifier
                                     .padding(horizontal = 4.dp)
                                     .weight(1f)
