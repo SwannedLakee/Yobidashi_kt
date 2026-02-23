@@ -45,7 +45,6 @@ class ChatTabViewModel(apiKey: String) {
     private val currentModel = mutableStateOf(GenerativeAiModel.GEMINI_2_5_FLASH_LITE)
 
     fun modelIcon(model: GenerativeAiModel) = when (model) {
-        GenerativeAiModel.GEMINI_2_0_FLASH_IMAGE -> R.drawable.ic_gen_ai_image
         else -> R.drawable.ic_agent
     }
 
