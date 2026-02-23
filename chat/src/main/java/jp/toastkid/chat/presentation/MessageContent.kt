@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.selection.DisableSelection
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Surface
@@ -162,16 +163,18 @@ private fun SourceArea(
                 shadowElevation = 2.dp,
                 modifier = Modifier.padding(4.dp)
             ) {
-                Text(
-                    source.title,
-                    modifier = Modifier
-                        .padding(4.dp)
-                        .combinedClickable(
-                            enabled = true,
-                            onClick = { openLink(source.url) },
-                            onLongClick = { openLinkOnBackground(source.url) }
-                        )
-                )
+                DisableSelection {
+                    Text(
+                        source.title,
+                        modifier = Modifier
+                            .padding(4.dp)
+                            .combinedClickable(
+                                enabled = true,
+                                onClick = { openLink(source.url) },
+                                onLongClick = { openLinkOnBackground(source.url) }
+                            )
+                    )
+                }
             }
         }
     }
