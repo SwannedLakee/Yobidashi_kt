@@ -1,5 +1,6 @@
 package jp.toastkid.chat.infrastructure.service
 
+import jp.toastkid.chat.domain.model.Source
 import jp.toastkid.chat.domain.repository.ChatResponseItem
 import org.json.JSONObject
 import java.util.regex.Pattern
@@ -40,19 +41,35 @@ class ChatStreamParser {
             else
                 null
 
+        val sources = mutableListOf<Source>()
+        if (line.contains("groundingChunks")) {
+            val sourceMatcher = sourcePattern.matcher(line)
+            while (sourceMatcher.find()) {
+                sources.add(
+                    Source(
+                        sourceMatcher.group(2),
+                        sourceMatcher.group(1)
+                    )
+                )
+            }
+        }
+
         val imageMatcher = imagePattern.matcher(line)
         val base64 = if (imageMatcher.find()) imageMatcher.group(2) else null
 
-        if (message.isNullOrEmpty() && base64.isNullOrEmpty()) {
+        if (message.isNullOrEmpty() && base64.isNullOrEmpty() && sources.isEmpty()) {
             return null
         }
 
         return ChatResponseItem(
             message = message ?: base64 ?: "",
-            image = base64 != null
+            image = base64 != null,
+            sources = sources
         )
     }
 
     private val imagePattern = Pattern.compile("\"inlineData\":(.+?)\"data\": \"(.+?)\"", Pattern.DOTALL)
+
+    private val sourcePattern = Pattern.compile("\\{\"web\": \\{\"uri\": \"(.+?)\",\"title\": \"(.+?)\"\\}\\}", Pattern.DOTALL)
 
 }
