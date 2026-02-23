@@ -3,6 +3,7 @@ package jp.toastkid.chat.domain.model
 enum class GenerativeAiModel(
     private val label: String,
     private val urlParameter: String,
+    private val shortLable: String,
     private val versionPath: String,
     private val webGrounding: Boolean = false,
     private val image: Boolean = false
@@ -11,28 +12,33 @@ enum class GenerativeAiModel(
     GEMINI_3_0_FLASH(
         "Gemini 3 Flash",
         "gemini-3-flash-preview",
+        "3.0",
         "v1beta"
     ),
     GEMINI_2_5_FLASH(
         "Gemini 2.5 Flash",
         "gemini-2.5-flash",
+        "2.5",
         "v1beta",
         webGrounding = true,
     ),
     GEMINI_2_5_FLASH_LITE(
         "Gemini 2.5 Flash Lite",
         "gemini-2.5-flash-lite",
+        "2.5 lite",
         "v1beta",
         webGrounding = true,
     ),
     GEMINI_2_5_FLASH_WITHOUT_WEB_GROUNDING(
         "Gemini 2.5 Flash(Web Grounding なし)",
         "gemini-2.5-flash",
+        "2.5",
         "v1beta",
     ),
     GEMINI_2_5_FLASH_LITE_WITHOUT_WEB_GROUNDING(
         "Gemini 2.5 Flash Lite(Web Grounding なし)",
         "gemini-2.5-flash-lite",
+        "2.5 lite",
         "v1beta",
     ),
     ;
@@ -48,6 +54,6 @@ enum class GenerativeAiModel(
 
     fun image() = image
 
-    fun version() = urlParameter.split("-")[1]
+    fun version() = shortLable
 
 }
