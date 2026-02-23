@@ -14,6 +14,7 @@
 -keep public class org.jsoup.** {
     public *;
 }
+-dontwarn com.google.re2j.**
 
 # For OkHttp
 -dontwarn java.nio.file.*
