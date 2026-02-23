@@ -3,7 +3,7 @@ package jp.toastkid.chat.domain.model
 enum class GenerativeAiModel(
     private val label: String,
     private val urlParameter: String,
-    private val shortLable: String,
+    private val shortLabel: String,
     private val versionPath: String,
     private val webGrounding: Boolean = false,
     private val image: Boolean = false
@@ -54,6 +54,6 @@ enum class GenerativeAiModel(
 
     fun image() = image
 
-    fun version() = shortLable
+    fun version() = shortLabel
 
 }
