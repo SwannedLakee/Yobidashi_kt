@@ -20,7 +20,11 @@ data class Chat(private val texts: MutableList<ChatMessage> = mutableStateListOf
 
         texts.set(
             texts.lastIndex,
-            element.copy(text = element.text + textContent, image = imageContent, sources = element.sources)
+            element.copy(
+                text = element.text + textContent,
+                image = imageContent,
+                sources = element.sources
+            )
         )
 
         if (text.sources().isNotEmpty()) {
