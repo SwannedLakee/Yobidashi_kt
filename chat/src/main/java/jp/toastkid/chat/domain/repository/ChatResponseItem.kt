@@ -25,8 +25,6 @@ data class ChatResponseItem(
 
         fun error() = ERROR
 
-        fun other() = OTHER
-
     }
 
 }
