@@ -11,5 +11,5 @@ package jp.toastkid.lib.viewmodel.event.tab
 import jp.toastkid.lib.viewmodel.event.Event
 import java.io.File
 
-class SaveEditorTabEvent(val file: File) : Event {
+class SaveEditorTabEvent(val file: File, val scrollPosition: Int) : Event {
 }
