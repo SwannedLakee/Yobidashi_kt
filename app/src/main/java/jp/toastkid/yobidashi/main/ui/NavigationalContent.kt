@@ -89,7 +89,7 @@ internal fun NavigationalContent(
             val currentTab = tabs.currentTab() as? EditorTab ?: return@tabComposable
             val view = LocalView.current
 
-            EditorTabView(currentTab.path, Modifier
+            EditorTabView(currentTab.path, currentTab.getScrolled(), Modifier
             //.onPlaced { takeScreenshot(tabs, view) }
             )
         }
