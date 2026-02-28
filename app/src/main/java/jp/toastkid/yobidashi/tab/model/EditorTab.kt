@@ -28,9 +28,13 @@ internal class EditorTab: Tab {
 
     override fun id(): String = id
 
-    override fun setScrolled(scrollY: Int) = Unit
+    private var scrollPosition = 0
 
-    override fun getScrolled(): Int = 0
+    override fun setScrolled(scrollY: Int) {
+        scrollPosition = scrollY
+    }
+
+    override fun getScrolled(): Int = scrollPosition
 
     override fun title(): String = titleStr
 
