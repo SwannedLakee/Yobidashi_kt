@@ -236,6 +236,17 @@ class TabList {
             }
     }
 
+    fun updateWithFilePath(path: String, scrollPosition: Int) {
+        tabs.filterIsInstance<EditorTab>()
+            .firstOrNull { it.path == path }
+            ?.let {
+                val currentIndex = tabs.indexOf(it)
+                it.setScrolled(scrollPosition)
+                tabs.set(currentIndex, it)
+                save()
+            }
+    }
+
     fun thumbnailNames(): Collection<String> = makeCopyTabs().map { it.thumbnailPath() }
 
     fun archiveIds(): Collection<String> {
