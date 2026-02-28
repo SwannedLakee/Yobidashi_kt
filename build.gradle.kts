@@ -39,7 +39,7 @@ allprojects {
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>()
         .configureEach {
             compilerOptions {
-                jvmTarget.set(JvmTarget.JVM_1_8)
+                jvmTarget.set(JvmTarget.JVM_21)
             }
         }
 }
@@ -116,6 +116,14 @@ tasks.register("printCoverageSummary") {
     doLast {
         println("| Category | Coverage(%)\n|:---|:---")
         map.map { "| ${it.key} | ${it.value}" }.forEach(::println)
+    }
+}
+
+subprojects {
+    plugins.withId("org.jetbrains.kotlin.android") {
+        extensions.configure<org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension> {
+            jvmToolchain(21)
+        }
     }
 }
 
