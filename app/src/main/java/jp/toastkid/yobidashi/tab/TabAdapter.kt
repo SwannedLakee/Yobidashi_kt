@@ -6,13 +6,13 @@ import android.os.Message
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.annotation.UiThread
-import androidx.core.net.toFile
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import jp.toastkid.lib.ContentViewModel
 import jp.toastkid.lib.image.BitmapCompressor
 import jp.toastkid.lib.preference.PreferenceApplier
 import jp.toastkid.lib.view.thumbnail.ThumbnailGenerator
+import jp.toastkid.lib.viewmodel.event.tab.SaveEditorTabEvent
 import jp.toastkid.web.archive.IdGenerator
 import jp.toastkid.web.archive.auto.AutoArchive
 import jp.toastkid.web.webview.GlobalWebViewPool
@@ -306,6 +306,11 @@ class TabAdapter(
 
     fun updateWebTab(idAndHistory: Pair<String, History>) {
         tabList.updateWithIdAndHistory(idAndHistory)
+    }
+
+    fun updateEditorTab(event: SaveEditorTabEvent) {
+        tabList.updateWithFilePath(event.file.absolutePath, event.scrollPosition)
+        saveTabList()
     }
 
     private fun setCount() {
