@@ -338,9 +338,7 @@ internal fun Content() {
                     openNewTab(PreferenceApplier(activity), tabs, navigationHostController)
                 }
                 is SaveEditorTabEvent -> {
-                    val currentTab = tabs.currentTab() as? EditorTab ?: return@collect
-                    currentTab.setFileInformation(it.file)
-                    tabs.saveTabList()
+                    tabs.updateEditorTab(it)
                 }
                 is OpenUrlEvent -> {
                     val urlString = it.uri.toString()
@@ -438,7 +436,8 @@ internal fun Content() {
     val statusBarColor = MaterialTheme.colorScheme.primary
 
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
             .drawBehind { drawRect(statusBarColor) }
     ) {
         EfficientImage(
