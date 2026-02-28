@@ -97,9 +97,11 @@ import jp.toastkid.ui.dialog.DestructiveChangeConfirmDialog
 import jp.toastkid.ui.dialog.InputFileNameDialogUi
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
+import java.io.File
+import kotlin.math.min
 
 @Composable
-fun EditorTabView(path: String?, modifier: Modifier) {
+fun EditorTabView(path: String?, initialScrolled: Int, modifier: Modifier) {
     val context = LocalContext.current as? ComponentActivity ?: return
 
     val contentViewModel = viewModel(ContentViewModel::class.java, context)
@@ -118,10 +120,10 @@ fun EditorTabView(path: String?, modifier: Modifier) {
                 viewModel.clearText()
                 viewModel.content().edit {
                     append(it)
-                    selection = TextRange.Zero
+                    selection = TextRange(min(initialScrolled, length))
                 }
             },
-            contentViewModel::saveEditorTab,
+            { contentViewModel.saveEditorTab(it, viewModel.content().selection.start) },
             viewModel::setLastSaved
         )
     }
@@ -251,7 +253,12 @@ fun EditorTabView(path: String?, modifier: Modifier) {
                 }
             }
             .semantics { contentDescription = "Editor input area" }
-            .appendTextContextMenuComponents(ContextMenuBuilder(viewModel, contentViewModel).invoke())
+            .appendTextContextMenuComponents(
+                ContextMenuBuilder(
+                    viewModel,
+                    contentViewModel
+                ).invoke()
+            )
             .nestedScroll(
                 object : NestedScrollConnection {
                     override fun onPreScroll(
@@ -313,6 +320,7 @@ fun EditorTabView(path: String?, modifier: Modifier) {
 
         onDispose {
             fileActionUseCase.save(viewModel::openInputFileNameDialog, false)
+            contentViewModel.saveEditorTab(File(path), viewModel.content().selection.start)
             localLifecycle.removeObserver(observer)
             viewModel.dispose()
         }
