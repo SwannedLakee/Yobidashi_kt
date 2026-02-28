@@ -358,9 +358,9 @@ class ContentViewModel : ViewModel() {
 
     fun menuScrollState() = menuScrollState
 
-    fun saveEditorTab(nextFile: File) {
+    fun saveEditorTab(nextFile: File, scrollPosition: Int) {
         viewModelScope.launch {
-            _event.emit(SaveEditorTabEvent(nextFile))
+            _event.emit(SaveEditorTabEvent(nextFile, scrollPosition))
         }
     }
 
