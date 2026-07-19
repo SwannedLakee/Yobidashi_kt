@@ -71,14 +71,14 @@ internal fun AppBar() {
     val contentViewModel = viewModel(ContentViewModel::class.java, activity)
 
     val sizePx = with(LocalDensity.current) { 72.dp.toPx() }
-    val anchors = DraggableAnchors {
-        "Start" at 0f
-        "End" at -sizePx
-    }
+
     val swipeableState = remember {
         AnchoredDraggableState(
             initialValue = "Start",
-            anchors = anchors
+            anchors = DraggableAnchors {
+                "Start" at 0f
+                "End" at -sizePx
+            }
         )
     }
 
