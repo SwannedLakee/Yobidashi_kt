@@ -132,7 +132,7 @@ private fun LineContent(
 private fun ListLineRow(
     line: ListLine,
     index: Int,
-    it: String,
+    originalLineText: String,
     contentColor: Color,
     textProvider: () -> String
 ) {
@@ -143,7 +143,7 @@ private fun ListLineRow(
             }
 
             line.taskList -> Checkbox(
-                checked = it.startsWith("[x]"),
+                checked = originalLineText.startsWith("[x]"),
                 enabled = false,
                 onCheckedChange = null,
                 modifier = Modifier.size(32.dp)
