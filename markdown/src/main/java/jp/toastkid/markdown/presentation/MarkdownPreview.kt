@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalTextToolbar
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import jp.toastkid.markdown.domain.model.data.CodeBlockLine
@@ -77,7 +78,12 @@ private fun LineContent(
 ) {
     when (line) {
         is TextBlock -> {
-            TextBlockRow(line, contentColor, viewModel)
+            TextBlockRow(
+                line,
+                contentColor,
+                viewModel.makeFontWeight(line.level),
+                viewModel.makeTopMargin(line.level)
+            )
         }
 
         is ListLine -> Column {
@@ -118,7 +124,8 @@ private fun LineContent(
 private fun TextBlockRow(
     line: TextBlock,
     contentColor: Color,
-    viewModel: MarkdownPreviewViewModel
+    fontWeight: FontWeight,
+    topMargin: Int
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         if (line.quote) {
@@ -135,9 +142,9 @@ private fun TextBlockRow(
             TextStyle(
                 color = if (line.quote) Color(0xFFCCAAFF) else contentColor,
                 fontSize = line.fontSize().sp,
-                fontWeight = viewModel.makeFontWeight(line.level),
+                fontWeight = fontWeight,
             ),
-            Modifier.padding(bottom = 8.dp, top = viewModel.makeTopMargin(line.level).dp)
+            Modifier.padding(bottom = 8.dp, top = topMargin.dp)
         )
     }
 }
