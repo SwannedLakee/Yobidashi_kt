@@ -101,29 +101,7 @@ private fun LineContent(
 
         is ListLine -> Column {
             line.list.forEachIndexed { index, it ->
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    when {
-                        line.ordered -> DisableSelection {
-                            Text("${index + 1}. ", fontSize = 14.sp)
-                        }
-
-                        line.taskList -> Checkbox(
-                            checked = it.startsWith("[x]"),
-                            enabled = false,
-                            onCheckedChange = null,
-                            modifier = Modifier.size(32.dp)
-                        )
-
-                        else -> DisableSelection {
-                            Text("・ ", fontSize = 14.sp, color = contentColor)
-                        }
-                    }
-                    TextLineView(
-                        viewModel.extractText(it, line.taskList),
-                        TextStyle(color = contentColor, fontSize = 14.sp),
-                        Modifier.padding(bottom = 4.dp)
-                    )
-                }
+                ListLineRow(line, index, it, contentColor, { viewModel.extractText(it, line.taskList) })
             }
         }
 
@@ -146,6 +124,39 @@ private fun LineContent(
             line,
             fontSize = 16.sp,
             modifier = Modifier.padding(bottom = 8.dp)
+        )
+    }
+}
+
+@Composable
+private fun ListLineRow(
+    line: ListLine,
+    index: Int,
+    it: String,
+    contentColor: Color,
+    textProvider: () -> String
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        when {
+            line.ordered -> DisableSelection {
+                Text("${index + 1}. ", fontSize = 14.sp)
+            }
+
+            line.taskList -> Checkbox(
+                checked = it.startsWith("[x]"),
+                enabled = false,
+                onCheckedChange = null,
+                modifier = Modifier.size(32.dp)
+            )
+
+            else -> DisableSelection {
+                Text("・ ", fontSize = 14.sp, color = contentColor)
+            }
+        }
+        TextLineView(
+            textProvider(),
+            TextStyle(color = contentColor, fontSize = 14.sp),
+            Modifier.padding(bottom = 4.dp)
         )
     }
 }
