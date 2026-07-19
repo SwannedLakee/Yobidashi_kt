@@ -77,26 +77,7 @@ private fun LineContent(
 ) {
     when (line) {
         is TextBlock -> {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                if (line.quote) {
-                    VerticalDivider(
-                        modifier = Modifier
-                            .padding(start = 4.dp, end = 8.dp)
-                            .height(36.dp),
-                        thickness = 2.dp,
-                        color = Color(0x88CCAAFF),
-                    )
-                }
-                TextLineView(
-                    line.text,
-                    TextStyle(
-                        color = if (line.quote) Color(0xFFCCAAFF) else contentColor,
-                        fontSize = line.fontSize().sp,
-                        fontWeight = viewModel.makeFontWeight(line.level),
-                    ),
-                    Modifier.padding(bottom = 8.dp, top = viewModel.makeTopMargin(line.level).dp)
-                )
-            }
+            TextBlockRow(line, contentColor, viewModel)
         }
 
         is ListLine -> Column {
@@ -129,6 +110,34 @@ private fun LineContent(
             line,
             fontSize = 16.sp,
             modifier = Modifier.padding(bottom = 8.dp)
+        )
+    }
+}
+
+@Composable
+private fun TextBlockRow(
+    line: TextBlock,
+    contentColor: Color,
+    viewModel: MarkdownPreviewViewModel
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        if (line.quote) {
+            VerticalDivider(
+                modifier = Modifier
+                    .padding(start = 4.dp, end = 8.dp)
+                    .height(36.dp),
+                thickness = 2.dp,
+                color = Color(0x88CCAAFF),
+            )
+        }
+        TextLineView(
+            line.text,
+            TextStyle(
+                color = if (line.quote) Color(0xFFCCAAFF) else contentColor,
+                fontSize = line.fontSize().sp,
+                fontWeight = viewModel.makeFontWeight(line.level),
+            ),
+            Modifier.padding(bottom = 8.dp, top = viewModel.makeTopMargin(line.level).dp)
         )
     }
 }
