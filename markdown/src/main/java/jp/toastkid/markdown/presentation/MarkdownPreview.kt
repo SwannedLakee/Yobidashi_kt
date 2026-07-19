@@ -105,9 +105,8 @@ private fun LineContent(
                     line,
                     index,
                     it,
-                    contentColor,
-                    { viewModel.extractText(it, line.taskList) }
-                )
+                    contentColor
+                ) { viewModel.extractText(it, line.taskList) }
             }
         }
 
