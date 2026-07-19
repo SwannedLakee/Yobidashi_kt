@@ -139,7 +139,7 @@ private fun ListLineRow(
     Row(verticalAlignment = Alignment.CenterVertically) {
         when {
             line.ordered -> DisableSelection {
-                Text("${index + 1}. ", fontSize = 14.sp)
+                Text("${index + 1}. ", fontSize = 14.sp, color = contentColor)
             }
 
             line.taskList -> Checkbox(
