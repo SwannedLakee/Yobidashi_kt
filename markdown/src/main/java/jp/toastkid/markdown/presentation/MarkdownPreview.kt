@@ -101,7 +101,13 @@ private fun LineContent(
 
         is ListLine -> Column {
             line.list.forEachIndexed { index, it ->
-                ListLineRow(line, index, it, contentColor, { viewModel.extractText(it, line.taskList) })
+                ListLineRow(
+                    line,
+                    index,
+                    it,
+                    contentColor,
+                    { viewModel.extractText(it, line.taskList) }
+                )
             }
         }
 
