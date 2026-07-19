@@ -43,6 +43,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntOffset
@@ -199,6 +200,8 @@ private fun OverflowMenu(
         viewModel(ContentViewModel::class.java, context)
     }
 
+    val resources = LocalResources.current
+
     Box(modifier = Modifier
         .width(32.dp)
         .fillMaxHeight()
@@ -240,7 +243,7 @@ private fun OverflowMenu(
                             .fetchWithAction { title, link ->
                                 contentViewModel?.open(link)
                                 contentViewModel?.snackShort(
-                                    context.getString(
+                                    resources.getString(
                                         R.string.message_open_random_wikipedia,
                                         title
                                     )
